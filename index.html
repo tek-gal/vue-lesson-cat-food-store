@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.js Pet Depot</title>
+    <script src="https://unpkg.com/vue@next"></script>
+    <link rel="stylesheet" type="text/css" href="/assets/css/app.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.css">
+</head>
+<body>
+    <div id="app">
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light d-flex flex-row justify-content-between">
+                <a class="navbar-brand" href="#">{{ sitename }}</a>
+                <button
+                    class="btn btn-outline-primary"
+                    @click="showCheckout"
+                >
+                    {{ cartItemCount }}
+                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                    Checkout
+                </button>
+            </nav>
+        </header>
+        <main class="flex flex-column align-items-center" style="margin-top: 20px;">
+            <div v-if="showProduct">
+                <div class="row product">
+                    <div class="col">
+                        <figure>
+                            <img v-bind:src="product.image" width="500">
+                        </figure>
+                    </div>
+                    <div class="col col­-expand">
+                        <h1 v-text="product.title"></h1>
+                        <p v-html="product.description"></p>
+                        <p class="price">
+                            {{ formatPrice(product.price) }}
+                        </p>
+                        <button
+                            class="btn btn-primary"
+                            @click="addToCart"
+                            v-bind:disabled="!canAddToCart"
+                        >
+                            Add to cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div v-else>
+                <div class="d-flex align-items-center flex-column">
+                    <form action="">
+                        <div class="form-group">
+                            <div class="col-­md-­6">
+                                <strong>First Name:</strong>
+                            </div>
+                            <div class="col-­md-­6">
+                                <input v-model="order.firstName" class="form­-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-­md-­6">
+                                <strong>Last Name:</strong>
+                            </div>
+                            <div class="col-­md-­6">
+                                <input v-model="order.lastName" class="form­-control" />
+                            </div>
+                        </div>
+                        <div class="form­-group">
+                            <div class="col-­md-­12">
+                                <strong>Address:</strong></div>
+                            <div class="col-­md-­12">
+                                <input v-model="order.address" class="form-­control" />
+                            </div>
+                        </div>
+                        <div class="form­-group">
+                            <div class="col-­md-­12">
+                                <strong>City:</strong></div>
+                            <div class="col-­md-­12">
+                                <input v-model="order.city" class="form-­control" />
+                            </div>
+                        </div>
+                        <div class="form-­group">
+                            <div class="col-­md-­2">
+                                <strong>State:</strong>
+                                <select v-model="order.state" class="form-­control">
+                                    <option disabled value="">State</option>
+                                    <option>AL</option>
+                                    <option>AR</option>
+                                    <option>CA</option>
+                                    <option>NV</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-­group">
+                            <div class="col-­md-­6 col-­md-­offset-­4">
+                                <strong>Zip / Postal Code:</strong>
+                                <input v-model="order.zip" class="form-­control" />
+                            </div>
+                        </div>
+                        <div class="col-­md-­12 verify">
+                            <pre>
+                                First Name: {{ order.firstName }}
+                                Last Name: {{ order.lastName }}
+                                Address: {{ order.address }}
+                                City: {{ order.city }}
+                                Zip: {{ order.zip }}
+                                State: {{ order.state }}
+                            </pre>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>
